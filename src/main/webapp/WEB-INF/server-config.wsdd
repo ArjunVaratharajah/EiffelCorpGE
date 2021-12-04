@@ -7,8 +7,8 @@
   <ns1:parameter name="dotNetSoapEncFix" value="true"/>
   <ns1:parameter name="enableNamespacePrefixOptimization" value="false"/>
   <ns1:parameter name="sendXMLDeclaration" value="true"/>
-  <ns1:parameter name="attachments.implementation" value="org.apache.axis.attachments.AttachmentsImpl"/>
   <ns1:parameter name="sendXsiTypes" value="true"/>
+  <ns1:parameter name="attachments.implementation" value="org.apache.axis.attachments.AttachmentsImpl"/>
   <ns1:requestFlow>
    <ns1:handler type="java:org.apache.axis.handlers.JWSHandler">
     <ns1:parameter name="scope" value="session"/>
@@ -32,16 +32,16 @@
   <ns1:parameter name="allowedMethods" value="getVersion"/>
   <ns1:parameter name="className" value="org.apache.axis.Version"/>
  </ns1:service>
- <ns1:service name="ProductIfService" provider="java:RPC" style="wrapped" use="literal">
-  <ns2:operation name="getProducts" qname="ns1:getProducts" returnQName="ns1:getProductsReturn" returnType="xsd:string" soapAction="" xmlns:ns1="http://product.server.ifservice.eiffelcorp.fr.gustaveeiffel.org" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://xml.apache.org/axis/wsdd/"/>
+ <ns1:service name="IfService" provider="java:RPC" style="wrapped" use="literal">
+  <ns1:operation name="getProducts" qname="ns2:getProducts" returnQName="ns2:getProductsReturn" returnType="xsd:string" soapAction="" xmlns:ns2="http://server.ifservice.eiffelcorp.fr.gustaveeiffel.org" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   <ns1:parameter name="allowedMethods" value="getProducts"/>
   <ns1:parameter name="typeMappingVersion" value="1.2"/>
-  <ns1:parameter name="wsdlPortType" value="ProductIfService"/>
-  <ns1:parameter name="className" value="org.gustaveeiffel.fr.eiffelcorp.ifservice.server.product.ProductIfService"/>
-  <ns1:parameter name="wsdlServicePort" value="ProductIfService"/>
-  <ns1:parameter name="schemaQualified" value="http://product.server.ifservice.eiffelcorp.fr.gustaveeiffel.org"/>
-  <ns1:parameter name="wsdlTargetNamespace" value="http://product.server.ifservice.eiffelcorp.fr.gustaveeiffel.org"/>
-  <ns1:parameter name="wsdlServiceElement" value="ProductIfServiceService"/>
+  <ns1:parameter name="wsdlPortType" value="IfService"/>
+  <ns1:parameter name="className" value="org.gustaveeiffel.fr.eiffelcorp.ifservice.server.IfService"/>
+  <ns1:parameter name="wsdlServicePort" value="IfService"/>
+  <ns1:parameter name="schemaQualified" value="http://server.ifservice.eiffelcorp.fr.gustaveeiffel.org"/>
+  <ns1:parameter name="wsdlTargetNamespace" value="http://server.ifservice.eiffelcorp.fr.gustaveeiffel.org"/>
+  <ns1:parameter name="wsdlServiceElement" value="IfServiceService"/>
  </ns1:service>
  <ns1:transport name="http">
   <ns1:requestFlow>

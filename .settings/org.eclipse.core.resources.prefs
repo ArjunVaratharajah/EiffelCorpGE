@@ -1,5 +1,5 @@
 eclipse.preferences.version=1
-encoding//src/main/java/org/gustaveeiffel/fr/eiffelcorp/ifservice/common/product/ProductIfService.java=UTF-8
-encoding//src/main/java/org/gustaveeiffel/fr/eiffelcorp/ifservice/common/product/ProductIfServiceService.java=UTF-8
-encoding//src/main/java/org/gustaveeiffel/fr/eiffelcorp/ifservice/common/product/ProductIfServiceServiceLocator.java=UTF-8
-encoding//src/main/java/org/gustaveeiffel/fr/eiffelcorp/ifservice/common/product/ProductIfServiceSoapBindingStub.java=UTF-8
+encoding//src/main/java/org/gustaveeiffel/fr/eiffelcorp/ifservice/common/IfService.java=UTF-8
+encoding//src/main/java/org/gustaveeiffel/fr/eiffelcorp/ifservice/common/IfServiceService.java=UTF-8
+encoding//src/main/java/org/gustaveeiffel/fr/eiffelcorp/ifservice/common/IfServiceServiceLocator.java=UTF-8
+encoding//src/main/java/org/gustaveeiffel/fr/eiffelcorp/ifservice/common/IfServiceSoapBindingStub.java=UTF-8

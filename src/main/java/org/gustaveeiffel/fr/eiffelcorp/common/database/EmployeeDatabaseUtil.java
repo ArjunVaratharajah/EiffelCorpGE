@@ -70,7 +70,7 @@ public class EmployeeDatabaseUtil {
 		}
 	}
 
-	public static IEmployee getById(int id) throws EmployeeNotFoundException {
+	public static IEmployee getById(int id) {
 		try {
 			Statement stmt = DatabaseUtil.getConnection().createStatement();
 			PreparedStatement ps = DatabaseUtil.getConnection().prepareStatement("SELECT * FROM employee where id = ?");

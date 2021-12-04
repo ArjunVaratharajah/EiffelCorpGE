@@ -117,7 +117,7 @@ public class ProductDatabaseUtil {
 		}
 	}
 
-	public static IProduct getById(int id) throws ProductNotFoundException {
+	public static IProduct getById(int id) {
 		try {
 			Statement stmt = DatabaseUtil.getConnection().createStatement();
 			PreparedStatement ps = DatabaseUtil.getConnection().prepareStatement("SELECT * FROM product where id = ?");

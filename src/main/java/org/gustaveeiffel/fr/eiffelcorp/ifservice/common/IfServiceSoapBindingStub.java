@@ -1,13 +1,13 @@
 /**
- * ProductIfServiceSoapBindingStub.java
+ * IfServiceSoapBindingStub.java
  *
  * This file was auto-generated from WSDL
  * by the Apache Axis 1.4 Apr 22, 2006 (06:55:48 PDT) WSDL2Java emitter.
  */
 
-package org.gustaveeiffel.fr.eiffelcorp.ifservice.common.product;
+package org.gustaveeiffel.fr.eiffelcorp.ifservice.common;
 
-public class ProductIfServiceSoapBindingStub extends org.apache.axis.client.Stub implements org.gustaveeiffel.fr.eiffelcorp.ifservice.common.product.ProductIfService {
+public class IfServiceSoapBindingStub extends org.apache.axis.client.Stub implements org.gustaveeiffel.fr.eiffelcorp.ifservice.common.IfService {
     private java.util.Vector cachedSerClasses = new java.util.Vector();
     private java.util.Vector cachedSerQNames = new java.util.Vector();
     private java.util.Vector cachedSerFactories = new java.util.Vector();
@@ -27,23 +27,23 @@ public class ProductIfServiceSoapBindingStub extends org.apache.axis.client.Stub
         oper.setName("getProducts");
         oper.setReturnType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
         oper.setReturnClass(java.lang.String.class);
-        oper.setReturnQName(new javax.xml.namespace.QName("http://product.server.ifservice.eiffelcorp.fr.gustaveeiffel.org", "getProductsReturn"));
+        oper.setReturnQName(new javax.xml.namespace.QName("http://server.ifservice.eiffelcorp.fr.gustaveeiffel.org", "getProductsReturn"));
         oper.setStyle(org.apache.axis.constants.Style.WRAPPED);
         oper.setUse(org.apache.axis.constants.Use.LITERAL);
         _operations[0] = oper;
 
     }
 
-    public ProductIfServiceSoapBindingStub() throws org.apache.axis.AxisFault {
+    public IfServiceSoapBindingStub() throws org.apache.axis.AxisFault {
          this(null);
     }
 
-    public ProductIfServiceSoapBindingStub(java.net.URL endpointURL, javax.xml.rpc.Service service) throws org.apache.axis.AxisFault {
+    public IfServiceSoapBindingStub(java.net.URL endpointURL, javax.xml.rpc.Service service) throws org.apache.axis.AxisFault {
          this(service);
          super.cachedEndpoint = endpointURL;
     }
 
-    public ProductIfServiceSoapBindingStub(javax.xml.rpc.Service service) throws org.apache.axis.AxisFault {
+    public IfServiceSoapBindingStub(javax.xml.rpc.Service service) throws org.apache.axis.AxisFault {
         if (service == null) {
             super.service = new org.apache.axis.client.Service();
         } else {
@@ -97,7 +97,7 @@ public class ProductIfServiceSoapBindingStub extends org.apache.axis.client.Stub
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
         _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
-        _call.setOperationName(new javax.xml.namespace.QName("http://product.server.ifservice.eiffelcorp.fr.gustaveeiffel.org", "getProducts"));
+        _call.setOperationName(new javax.xml.namespace.QName("http://server.ifservice.eiffelcorp.fr.gustaveeiffel.org", "getProducts"));
 
         setRequestHeaders(_call);
         setAttachments(_call);
