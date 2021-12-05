@@ -88,4 +88,9 @@ public class Product extends UnicastRemoteObject implements IProduct {
         this.ownerId = ownerId;
     }
 
+    @Override
+    public String getType() throws RemoteException {
+        return type.name();
+    }
+
 }

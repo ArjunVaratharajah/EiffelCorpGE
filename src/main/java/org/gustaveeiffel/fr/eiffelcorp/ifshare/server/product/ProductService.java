@@ -2,8 +2,7 @@ package org.gustaveeiffel.fr.eiffelcorp.ifshare.server.product;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import org.gustaveeiffel.fr.eiffelcorp.common.customer.CartProduct;
 import org.gustaveeiffel.fr.eiffelcorp.common.database.CartDatabaseUtil;
@@ -29,11 +28,14 @@ import org.gustaveeiffel.fr.eiffelcorp.common.product.TypeProduct;
 
 public class ProductService extends UnicastRemoteObject implements IProductService {
 
-	private List<IObservator> watingListClientEmployees;
+	private Map<TypeProduct, Set<IObservator>> employeesToNotifyByProductType;
 
 	public ProductService() throws RemoteException {
 		super();
-		watingListClientEmployees = new ArrayList<>();
+		employeesToNotifyByProductType = new HashMap<>();
+		employeesToNotifyByProductType.put(TypeProduct.clothes, new HashSet<IObservator>());
+		employeesToNotifyByProductType.put(TypeProduct.tech, new HashSet<IObservator>());
+		employeesToNotifyByProductType.put(TypeProduct.food, new HashSet<IObservator>());
 	}
 
 	@Override
@@ -117,6 +119,11 @@ public class ProductService extends UnicastRemoteObject implements IProductServi
 		product.setPrice(price);
 		ProductDatabaseUtil.update(product);
 
+		Set<IObservator> employeesToNotify = employeesToNotifyByProductType.get(TypeProduct.valueOf(product.getType()));
+		for (IObservator employeeToNotify : employeesToNotify) {
+			employeeToNotify.notifyProductAvailable(product.getInfo());
+		}
+
 		return "The product " + product.getName() + " has correctly been set to available with new price " + price
 				+ ".";
 	}
@@ -156,15 +163,8 @@ public class ProductService extends UnicastRemoteObject implements IProductServi
 	}
 
 	@Override
-	public synchronized void subscribe(IObservator clientEmployee) throws RemoteException {
-		watingListClientEmployees.add(clientEmployee);
-	}
-
-	@Override
-	public void changeValue(int value) throws RemoteException {
-		for (IObservator clientEmployee : watingListClientEmployees) {
-			clientEmployee.notifyProductAvailable(6);
-		}
+	public synchronized void subscribe(IObservator clientEmployee, String typeProduct) throws RemoteException {
+		employeesToNotifyByProductType.get(TypeProduct.valueOf(typeProduct)).add(clientEmployee);
 	}
 
 }

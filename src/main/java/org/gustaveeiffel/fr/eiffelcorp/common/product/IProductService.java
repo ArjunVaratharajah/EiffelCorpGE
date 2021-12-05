@@ -22,7 +22,6 @@ public interface IProductService extends Remote {
 
     List<IReview> getReviews(int idProduct) throws RemoteException;
 
-    public void subscribe(IObservator clientEmployee) throws RemoteException;
+    public void subscribe(IObservator clientEmployee, String typeProduct) throws RemoteException;
 
-    public void changeValue(int value) throws RemoteException;
 }

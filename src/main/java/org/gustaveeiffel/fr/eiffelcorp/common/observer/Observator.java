@@ -11,7 +11,8 @@ public class Observator extends UnicastRemoteObject implements IObservator {
     }
 
     @Override
-    public void notifyProductAvailable(int value) throws RemoteException {
-        System.out.println("New value : " + value);
+    public void notifyProductAvailable(String productInfo) throws RemoteException {
+        System.out.println("\nNew product available or price updated: ");
+        System.out.println(productInfo + "\n");
     }
 }

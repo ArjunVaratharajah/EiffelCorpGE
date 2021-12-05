@@ -80,7 +80,7 @@ public class ProductDatabaseUtil {
 
 	public static void update(IProduct product) {
 		try {
-			String query = "UPDATE product SET name = ?, price = ?, ownerId = ?, isAvailable = ?, hasAlreadyBeenSold = ? WHERE id = ?";
+			String query = "UPDATE product SET name = ?, price = ?, ownerId = ?, isAvailable = ?, hasAlreadyBeenSold = ?, type = ? WHERE id = ?";
 
 			PreparedStatement preparedStmt = DatabaseUtil.getConnection().prepareStatement(query);
 			preparedStmt.setString(1, product.getName());
@@ -88,7 +88,8 @@ public class ProductDatabaseUtil {
 			preparedStmt.setInt(3, product.getOwnerId());
 			preparedStmt.setBoolean(4, product.isAvailable());
 			preparedStmt.setBoolean(5, product.hasAlreadyBeenSold());
-			preparedStmt.setInt(6, product.getId());
+			preparedStmt.setString(6, product.getType());
+			preparedStmt.setInt(7, product.getId());
 			preparedStmt.execute();
 			preparedStmt.close();
 		} catch (Exception e) {

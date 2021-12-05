@@ -5,6 +5,6 @@ import java.rmi.RemoteException;
 
 public interface IObservator extends Remote {
 
-    void notifyProductAvailable(int value) throws RemoteException;
+    void notifyProductAvailable(String productInfo) throws RemoteException;
 
 }

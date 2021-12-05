@@ -26,4 +26,6 @@ public interface IProduct extends Remote {
     String getInfo() throws RemoteException;
 
     void setOwnerId(int ownerId) throws RemoteException;
+
+    String getType() throws RemoteException;
 }

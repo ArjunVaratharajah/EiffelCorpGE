@@ -19,16 +19,17 @@ import java.util.Scanner;
 public class EmployeeClientIfShare {
 
     private int employeeId;
+    private IObservator observator;
 
     private IProductService productService;
     private IEmployeeService employeeService;
 
     public EmployeeClientIfShare(int employeeId) throws MalformedURLException, NotBoundException, RemoteException {
         this.employeeId = employeeId;
+        observator = new Observator();
+
         productService = (IProductService) Naming.lookup("rmi://localhost:1099/ProductService");
         employeeService = (IEmployeeService) Naming.lookup("rmi://localhost:1100/EmployeeService");
-
-        productService.subscribe(new Observator());
     }
 
     public void execute() throws Exception {
@@ -45,6 +46,7 @@ public class EmployeeClientIfShare {
             System.out.println("7. Review product");
             System.out.println("8. Display reviews of a product");
             System.out.println("9. Add new product");
+            System.out.println("10. Subscribe to product type");
 
             System.out.print("Select option: ");
             Scanner scanner = new Scanner(System.in);
@@ -78,6 +80,9 @@ public class EmployeeClientIfShare {
                         break;
                     case 9:
                         addNewProduct();
+                        break;
+                    case 10:
+                        subscribeToProductType();
                         break;
 
                     default:
@@ -233,5 +238,22 @@ public class EmployeeClientIfShare {
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    private void subscribeToProductType() throws RemoteException {
+        System.out.println("\n===Subscribe to product type===");
+
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter type (clothes, tech or food): ");
+        String type = scanner.nextLine();
+
+        try {
+            productService.subscribe(observator, type);
+            System.out.println("You are subscribed to be notified for " + type + " products.");
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 }
