@@ -20,4 +20,5 @@ public interface IEmployee extends Remote {
     void removeFromBudget(double price) throws RemoteException;
 
     void addToBudget(double price) throws RemoteException;
+
 }

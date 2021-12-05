@@ -2,6 +2,8 @@ package org.gustaveeiffel.fr.eiffelcorp.ifshare.client;
 
 import org.gustaveeiffel.fr.eiffelcorp.common.employee.IEmployee;
 import org.gustaveeiffel.fr.eiffelcorp.common.employee.IEmployeeService;
+import org.gustaveeiffel.fr.eiffelcorp.common.observer.IObservator;
+import org.gustaveeiffel.fr.eiffelcorp.common.observer.Observator;
 import org.gustaveeiffel.fr.eiffelcorp.common.product.IProduct;
 import org.gustaveeiffel.fr.eiffelcorp.common.product.IProductService;
 import org.gustaveeiffel.fr.eiffelcorp.common.product.IReview;
@@ -25,6 +27,8 @@ public class EmployeeClientIfShare {
         this.employeeId = employeeId;
         productService = (IProductService) Naming.lookup("rmi://localhost:1099/ProductService");
         employeeService = (IEmployeeService) Naming.lookup("rmi://localhost:1100/EmployeeService");
+
+        productService.subscribe(new Observator());
     }
 
     public void execute() throws Exception {
@@ -219,8 +223,12 @@ public class EmployeeClientIfShare {
         System.out.print("Enter price : ");
         double price = scanner.nextDouble();
 
+        scanner.nextLine();
+        System.out.print("Enter type (clothes, tech or food): ");
+        String type = scanner.nextLine();
+
         try {
-            IProduct product = productService.create(name, price, employeeId);
+            IProduct product = productService.create(name, price, employeeId, type);
             System.out.println("Product created: " + product.getInfo());
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());

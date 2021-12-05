@@ -1,6 +1,7 @@
 package org.gustaveeiffel.fr.eiffelcorp.common.database;
 
 import org.gustaveeiffel.fr.eiffelcorp.common.employee.IEmployee;
+import org.gustaveeiffel.fr.eiffelcorp.common.product.TypeProduct;
 
 import java.rmi.RemoteException;
 import java.sql.SQLException;
@@ -28,10 +29,11 @@ public class InitializeDatabase {
         IEmployee houcem = EmployeeDatabaseUtil.create("Houcem", "BOUBAKRI", 300); // ID 3
         IEmployee idriss = EmployeeDatabaseUtil.create("Idriss", "BENHAMED", 200); // ID 4
 
-        ProductDatabaseUtil.create("Trousers", 5, arjun.getId(), true); // ID 1
-        ProductDatabaseUtil.create("Smartphone", 80, arjun.getId(), false); // ID 2
-        ProductDatabaseUtil.create("iPhone", 100, benjamin.getId(), false); // ID 3
-        ProductDatabaseUtil.create("PC", 500, houcem.getId(), true); // ID 4
+        ProductDatabaseUtil.create("Trousers", 5, arjun.getId(), true, TypeProduct.clothes); // ID 1
+        ProductDatabaseUtil.create("Smartphone", 80, arjun.getId(), false, TypeProduct.tech); // ID 2
+        ProductDatabaseUtil.create("iPhone", 100, benjamin.getId(), false, TypeProduct.tech); // ID 3
+        ProductDatabaseUtil.create("PC", 500, houcem.getId(), true, TypeProduct.tech); // ID 4
+        ProductDatabaseUtil.create("Banana", 2, houcem.getId(), true, TypeProduct.food); // ID 5
 
         CustomerDatabaseUtil.create("Adrien", "KUMBO", 600); // ID 1
         CustomerDatabaseUtil.create("Thomas", "LEPARMENTIER", 20); // ID 2

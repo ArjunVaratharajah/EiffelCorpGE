@@ -1,141 +1,170 @@
 package org.gustaveeiffel.fr.eiffelcorp.ifshare.server.product;
 
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.gustaveeiffel.fr.eiffelcorp.common.customer.CartProduct;
 import org.gustaveeiffel.fr.eiffelcorp.common.database.CartDatabaseUtil;
 import org.gustaveeiffel.fr.eiffelcorp.common.database.EmployeeDatabaseUtil;
 import org.gustaveeiffel.fr.eiffelcorp.common.database.ProductDatabaseUtil;
 import org.gustaveeiffel.fr.eiffelcorp.common.database.ReviewDatabaseUtil;
 import org.gustaveeiffel.fr.eiffelcorp.common.employee.IEmployee;
-import org.gustaveeiffel.fr.eiffelcorp.common.exception.*;
+import org.gustaveeiffel.fr.eiffelcorp.common.exception.BudgetIsNotEnoughException;
+import org.gustaveeiffel.fr.eiffelcorp.common.exception.BuyerSameAsSellerException;
+import org.gustaveeiffel.fr.eiffelcorp.common.exception.CartProductNotFoundException;
+import org.gustaveeiffel.fr.eiffelcorp.common.exception.InvalidProductRatingException;
+import org.gustaveeiffel.fr.eiffelcorp.common.exception.NotProductOwnerException;
+import org.gustaveeiffel.fr.eiffelcorp.common.exception.ProductHasNotAlreadyBeenSoldException;
+import org.gustaveeiffel.fr.eiffelcorp.common.exception.ProductIsInACartException;
+import org.gustaveeiffel.fr.eiffelcorp.common.exception.ProductIsNotAvailableException;
+import org.gustaveeiffel.fr.eiffelcorp.common.exception.ProductNameInvalidException;
+import org.gustaveeiffel.fr.eiffelcorp.common.exception.ProductPriceInvalidException;
+import org.gustaveeiffel.fr.eiffelcorp.common.observer.IObservator;
 import org.gustaveeiffel.fr.eiffelcorp.common.product.IProduct;
 import org.gustaveeiffel.fr.eiffelcorp.common.product.IProductService;
 import org.gustaveeiffel.fr.eiffelcorp.common.product.IReview;
-
-import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
-import java.util.List;
+import org.gustaveeiffel.fr.eiffelcorp.common.product.TypeProduct;
 
 public class ProductService extends UnicastRemoteObject implements IProductService {
 
-    public ProductService() throws RemoteException {
-        super();
-    }
+	private List<IObservator> watingListClientEmployees;
 
-    @Override
-    public IProduct create(String name, double price, int ownerId) throws RemoteException {
-        if (name.trim().isEmpty()) {
-            throw new ProductNameInvalidException(name);
-        }
+	public ProductService() throws RemoteException {
+		super();
+		watingListClientEmployees = new ArrayList<>();
+	}
 
-        if (price <= 0) {
-            throw new ProductPriceInvalidException(price);
-        }
+	@Override
+	public IProduct create(String name, double price, int ownerId, String typeProduct) throws RemoteException {
+		if (name.trim().isEmpty()) {
+			throw new ProductNameInvalidException(name);
+		}
 
-        return ProductDatabaseUtil.create(name, price, ownerId, false);
-    }
+		if (price <= 0) {
+			throw new ProductPriceInvalidException(price);
+		}
 
-    @Override
-    public List<IProduct> getAllAvailable() throws RemoteException {
-        return ProductDatabaseUtil.getAllAvailable();
-    }
+		return ProductDatabaseUtil.create(name, price, ownerId, false, TypeProduct.valueOf(typeProduct));
+	}
 
-    @Override
-    public List<IProduct> getByOwnerId(int ownerId) throws RemoteException {
-        return ProductDatabaseUtil.getByOwnerId(ownerId);
-    }
+	@Override
+	public List<IProduct> getAllAvailable() throws RemoteException {
+		return ProductDatabaseUtil.getAllAvailable();
+	}
 
-    @Override
-    public String buy(int idProduct, int idBuyer) throws RemoteException {
-        IProduct product = ProductDatabaseUtil.getById(idProduct);
-        IEmployee buyer = EmployeeDatabaseUtil.getById(idBuyer);
+	@Override
+	public List<IProduct> getByOwnerId(int ownerId) throws RemoteException {
+		return ProductDatabaseUtil.getByOwnerId(ownerId);
+	}
 
-        // The seller can't be the buyer
-        if (idBuyer == product.getOwnerId()) {
-            throw new BuyerSameAsSellerException();
-        }
+	@Override
+	public String buy(int idProduct, int idBuyer) throws RemoteException {
+		IProduct product = ProductDatabaseUtil.getById(idProduct);
+		IEmployee buyer = EmployeeDatabaseUtil.getById(idBuyer);
 
-        if (!product.isAvailable()) {
-            throw new ProductIsNotAvailableException();
-        }
+		// The seller can't be the buyer
+		if (idBuyer == product.getOwnerId()) {
+			throw new BuyerSameAsSellerException();
+		}
 
-        if (buyer.getBudget() < product.getPrice()) {
-            throw new BudgetIsNotEnoughException(buyer.getBudget(), product.getPrice());
-        }
+		if (!product.isAvailable()) {
+			throw new ProductIsNotAvailableException();
+		}
 
-        try {
-            CartProduct cartProduct = CartDatabaseUtil.getCartProduct(idProduct);
-            throw new ProductIsInACartException();
-        } catch (CartProductNotFoundException e) {
-            // Product is not in a cart, we can continue
-        }
+		if (buyer.getBudget() < product.getPrice()) {
+			throw new BudgetIsNotEnoughException(buyer.getBudget(), product.getPrice());
+		}
 
-        IEmployee seller = EmployeeDatabaseUtil.getById(product.getOwnerId());
-        buyer.removeFromBudget(product.getPrice());
-        seller.addToBudget(product.getPrice());
+		try {
+			CartProduct cartProduct = CartDatabaseUtil.getCartProduct(idProduct);
+			throw new ProductIsInACartException();
+		} catch (CartProductNotFoundException e) {
+			// Product is not in a cart, we can continue
+		}
 
-        product.setAvailable(false);
-        product.setOwnerId(idBuyer);
-        product.setHasAlreadyBeenSold(true);
+		IEmployee seller = EmployeeDatabaseUtil.getById(product.getOwnerId());
+		buyer.removeFromBudget(product.getPrice());
+		seller.addToBudget(product.getPrice());
 
-        ProductDatabaseUtil.update(product);
-        EmployeeDatabaseUtil.update(buyer);
-        EmployeeDatabaseUtil.update(seller);
+		product.setAvailable(false);
+		product.setOwnerId(idBuyer);
+		product.setHasAlreadyBeenSold(true);
 
-        return "The product " + product.getName() + " has correctly been sold by " + seller.getFullname() + " to " + buyer.getFullname() + ".\nThe amount of the transaction was " + product.getPrice() + ".";
-    }
+		ProductDatabaseUtil.update(product);
+		EmployeeDatabaseUtil.update(buyer);
+		EmployeeDatabaseUtil.update(seller);
 
-    @Override
-    public String putAsAvailable(int employeeId, int idProduct, double price) throws RemoteException {
-        IProduct product = ProductDatabaseUtil.getById(idProduct);
+		return "The product " + product.getName() + " has correctly been sold by " + seller.getFullname() + " to "
+				+ buyer.getFullname() + ".\nThe amount of the transaction was " + product.getPrice() + ".";
+	}
 
-        if (product.getOwnerId() != employeeId) {
-            IEmployee employee = EmployeeDatabaseUtil.getById(product.getOwnerId());
-            throw new NotProductOwnerException(product.getName(), employee.getFullname());
-        }
+	@Override
+	public String putAsAvailable(int employeeId, int idProduct, double price) throws RemoteException {
+		IProduct product = ProductDatabaseUtil.getById(idProduct);
 
-        if (price <= 0) {
-            throw new ProductPriceInvalidException(price);
-        }
+		if (product.getOwnerId() != employeeId) {
+			IEmployee employee = EmployeeDatabaseUtil.getById(product.getOwnerId());
+			throw new NotProductOwnerException(product.getName(), employee.getFullname());
+		}
 
-        product.setAvailable(true);
-        product.setPrice(price);
-        ProductDatabaseUtil.update(product);
+		if (price <= 0) {
+			throw new ProductPriceInvalidException(price);
+		}
 
-        return "The product " + product.getName() + " has correctly been set to available with new price " + price + ".";
-    }
+		product.setAvailable(true);
+		product.setPrice(price);
+		ProductDatabaseUtil.update(product);
 
-    @Override
-    public String review(int idProduct, int idEmployee, int rating, String comment) throws RemoteException {
-        IProduct product = ProductDatabaseUtil.getById(idProduct);
+		return "The product " + product.getName() + " has correctly been set to available with new price " + price
+				+ ".";
+	}
 
-        if (product.getOwnerId() != idEmployee) {
-            IEmployee employee = EmployeeDatabaseUtil.getById(product.getOwnerId());
-            throw new NotProductOwnerException(product.getName(), employee.getFullname());
-        }
+	@Override
+	public String review(int idProduct, int idEmployee, int rating, String comment) throws RemoteException {
+		IProduct product = ProductDatabaseUtil.getById(idProduct);
 
-        if (!product.hasAlreadyBeenSold()) {
-            throw new ProductHasNotAlreadyBeenSoldException();
-        }
+		if (product.getOwnerId() != idEmployee) {
+			IEmployee employee = EmployeeDatabaseUtil.getById(product.getOwnerId());
+			throw new NotProductOwnerException(product.getName(), employee.getFullname());
+		}
 
-        if (!product.isAvailable()) {
-            throw new ProductIsNotAvailableException();
-        }
+		if (!product.hasAlreadyBeenSold()) {
+			throw new ProductHasNotAlreadyBeenSoldException();
+		}
 
-        if (rating < 1 || rating > 5) {
-            throw new InvalidProductRatingException();
-        }
+		if (!product.isAvailable()) {
+			throw new ProductIsNotAvailableException();
+		}
 
-        ReviewDatabaseUtil.addOrUpdate(idProduct, idEmployee, rating, comment);
+		if (rating < 1 || rating > 5) {
+			throw new InvalidProductRatingException();
+		}
 
-        return "The review has been added/updated for the product " + product.getName() + ".";
-    }
+		ReviewDatabaseUtil.addOrUpdate(idProduct, idEmployee, rating, comment);
 
-    @Override
-    public List<IReview> getReviews(int idProduct) throws RemoteException {
-        // Throw an exception if the product does not exist for the client side
-        ProductDatabaseUtil.getById(idProduct);
+		return "The review has been added/updated for the product " + product.getName() + ".";
+	}
 
-        return ReviewDatabaseUtil.getByProductId(idProduct);
-    }
+	@Override
+	public List<IReview> getReviews(int idProduct) throws RemoteException {
+		// Throw an exception if the product does not exist for the client side
+		ProductDatabaseUtil.getById(idProduct);
+
+		return ReviewDatabaseUtil.getByProductId(idProduct);
+	}
+
+	@Override
+	public synchronized void subscribe(IObservator clientEmployee) throws RemoteException {
+		watingListClientEmployees.add(clientEmployee);
+	}
+
+	@Override
+	public void changeValue(int value) throws RemoteException {
+		for (IObservator clientEmployee : watingListClientEmployees) {
+			clientEmployee.notifyProductAvailable(6);
+		}
+	}
 
 }

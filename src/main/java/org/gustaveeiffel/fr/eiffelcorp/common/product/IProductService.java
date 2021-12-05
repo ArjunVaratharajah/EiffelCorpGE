@@ -1,5 +1,7 @@
 package org.gustaveeiffel.fr.eiffelcorp.common.product;
 
+import org.gustaveeiffel.fr.eiffelcorp.common.observer.IObservator;
+
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
@@ -10,7 +12,7 @@ public interface IProductService extends Remote {
 
     List<IProduct> getByOwnerId(int ownerId) throws RemoteException;
 
-    IProduct create(String name, double price, int ownerId) throws RemoteException;
+    IProduct create(String name, double price, int ownerId, String type) throws RemoteException;
 
     String buy(int idProduct, int idBuyer) throws RemoteException;
 
@@ -20,4 +22,7 @@ public interface IProductService extends Remote {
 
     List<IReview> getReviews(int idProduct) throws RemoteException;
 
+    public void subscribe(IObservator clientEmployee) throws RemoteException;
+
+    public void changeValue(int value) throws RemoteException;
 }

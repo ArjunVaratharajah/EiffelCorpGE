@@ -1,9 +1,9 @@
 package org.gustaveeiffel.fr.eiffelcorp.ifshare.server.product;
 
+import org.gustaveeiffel.fr.eiffelcorp.common.product.IProductService;
+
 import java.rmi.Naming;
 import java.rmi.registry.LocateRegistry;
-
-import org.gustaveeiffel.fr.eiffelcorp.common.product.IProductService;
 
 public class ProductServerIfShare {
 

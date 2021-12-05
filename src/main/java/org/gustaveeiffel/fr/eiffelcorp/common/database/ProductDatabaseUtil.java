@@ -2,6 +2,7 @@ package org.gustaveeiffel.fr.eiffelcorp.common.database;
 
 import org.gustaveeiffel.fr.eiffelcorp.common.exception.ProductNotFoundException;
 import org.gustaveeiffel.fr.eiffelcorp.common.product.IProduct;
+import org.gustaveeiffel.fr.eiffelcorp.common.product.TypeProduct;
 import org.gustaveeiffel.fr.eiffelcorp.common.util.StringUtil;
 import org.gustaveeiffel.fr.eiffelcorp.ifshare.server.product.Product;
 
@@ -37,6 +38,7 @@ public class ProductDatabaseUtil {
 					"ownerId integer not null,",
 					"isAvailable boolean not null default 'true',",
 					"hasAlreadyBeenSold boolean not null default 'false',",
+					"type char(255) not null,",
 					"CONSTRAINT fk_id_employee FOREIGN KEY(ownerId) REFERENCES employee(id)",
 				")"
 			);
@@ -49,10 +51,10 @@ public class ProductDatabaseUtil {
 		}
 	}
 
-	public static IProduct create(String name, double price, int ownerId, boolean isAvailable) {
+	public static IProduct create(String name, double price, int ownerId, boolean isAvailable, TypeProduct type) {
 		try {
 			Statement stmt = DatabaseUtil.getConnection().createStatement();
-			String query = "INSERT INTO product (name, price, ownerId, isAvailable, hasAlreadyBeenSold) VALUES (?, ?, ?, ?, ?)";
+			String query = "INSERT INTO product (name, price, ownerId, isAvailable, hasAlreadyBeenSold, type) VALUES (?, ?, ?, ?, ?, ?)";
 
 			boolean hasAlreadyBeenSold = false;
 
@@ -62,6 +64,7 @@ public class ProductDatabaseUtil {
 			preparedStmt.setInt(3, ownerId);
 			preparedStmt.setBoolean(4, isAvailable);
 			preparedStmt.setBoolean(5, hasAlreadyBeenSold);
+			preparedStmt.setString(6, type.name());
 			preparedStmt.execute();
 			
 	    	ResultSet rs = preparedStmt.getGeneratedKeys();
@@ -69,7 +72,7 @@ public class ProductDatabaseUtil {
             int productId = rs.getInt(1);
 			stmt.close();
 
-			return new Product(productId, name, price, isAvailable, ownerId, hasAlreadyBeenSold);
+			return new Product(productId, name, price, isAvailable, ownerId, hasAlreadyBeenSold, type);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -106,9 +109,10 @@ public class ProductDatabaseUtil {
 			boolean isAvailable = rs.getBoolean("isAvailable");
 			int ownerId = rs.getInt("ownerId");
 			boolean hasAlreadyBeenSold = rs.getBoolean("hasAlreadyBeenSold");
-			
+			String type = rs.getString("type").trim();
+
 			stmt.close();
-			return new Product(id, name, price, isAvailable, ownerId, hasAlreadyBeenSold);
+			return new Product(id, name, price, isAvailable, ownerId, hasAlreadyBeenSold, TypeProduct.valueOf(type));
 		} catch (Exception e) {
 			throw new ProductNotFoundException(id);
 		}
@@ -128,8 +132,9 @@ public class ProductDatabaseUtil {
 				boolean isAvailable = rs.getBoolean("isAvailable");
 				int ownerId = rs.getInt("ownerId");
 				boolean hasAlreadyBeenSold = rs.getBoolean("hasAlreadyBeenSold");
+				String type = rs.getString("type").trim();
 
-				products.add(new Product(id, name, price, isAvailable, ownerId, hasAlreadyBeenSold));
+				products.add(new Product(id, name, price, isAvailable, ownerId, hasAlreadyBeenSold, TypeProduct.valueOf(type)));
 			}
 			stmt.close();
 		} catch (Exception e) {
@@ -153,8 +158,9 @@ public class ProductDatabaseUtil {
 				boolean isAvailable = rs.getBoolean("isAvailable");
 				int ownerId = rs.getInt("ownerId");
 				boolean hasAlreadyBeenSold = rs.getBoolean("hasAlreadyBeenSold");
+				String type = rs.getString("type").trim();
 
-				products.add(new Product(id, name, price, isAvailable, ownerId, hasAlreadyBeenSold));
+				products.add(new Product(id, name, price, isAvailable, ownerId, hasAlreadyBeenSold, TypeProduct.valueOf(type)));
 			}
 			stmt.close();
 		} catch (Exception e) {
@@ -180,8 +186,9 @@ public class ProductDatabaseUtil {
 				double price = rs.getDouble("price");
 				boolean isAvailable = rs.getBoolean("isAvailable");
 				boolean hasAlreadyBeenSold = rs.getBoolean("hasAlreadyBeenSold");
+				String type = rs.getString("type").trim();
 
-				products.add(new Product(id, name, price, isAvailable, ownerId, hasAlreadyBeenSold));
+				products.add(new Product(id, name, price, isAvailable, ownerId, hasAlreadyBeenSold, TypeProduct.valueOf(type)));
 			}
 			stmt.close();
 		} catch (Exception e) {

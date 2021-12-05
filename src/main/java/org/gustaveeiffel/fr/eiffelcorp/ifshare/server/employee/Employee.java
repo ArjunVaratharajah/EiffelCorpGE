@@ -1,9 +1,9 @@
 package org.gustaveeiffel.fr.eiffelcorp.ifshare.server.employee;
 
+import org.gustaveeiffel.fr.eiffelcorp.common.employee.IEmployee;
+
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-
-import org.gustaveeiffel.fr.eiffelcorp.common.employee.IEmployee;
 
 public class Employee extends UnicastRemoteObject implements IEmployee {
 
