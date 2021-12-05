@@ -12,8 +12,11 @@ public class ClientIfService {
 
 	public static void main(String[] args) throws ServiceException, RemoteException {
 		IfService service = new IfServiceServiceLocator().getIfService();
-		String products = service.getProducts();
-
-		System.out.println(products);
+		try {
+			String products = service.getProducts();
+			System.out.println(products);
+		} catch (RuntimeException e) {
+			System.out.print(e.getMessage());
+		}
 	}
 }

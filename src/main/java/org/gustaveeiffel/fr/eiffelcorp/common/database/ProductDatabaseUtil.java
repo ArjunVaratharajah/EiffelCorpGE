@@ -49,30 +49,6 @@ public class ProductDatabaseUtil {
 		}
 	}
 
-	public static void initializeData() {
-		try {
-			Statement st = DatabaseUtil.getConnection().createStatement();
-
-			List<String> sql = Arrays.asList(
-					"CREATE TABLE IF NOT EXISTS product(",
-					"id SERIAL primary key,",
-					"name char(255) not null,",
-					"price numeric(255) not null,",
-					"ownerId integer not null,",
-					"isAvailable boolean not null default 'true',",
-					"hasAlreadyBeenSold boolean not null default 'false',",
-					"CONSTRAINT fk_id_employee FOREIGN KEY(ownerId) REFERENCES employee(id)",
-					")"
-			);
-
-			st.executeUpdate(StringUtil.join(sql));
-			st.close();
-			System.out.println("product table has been created.");
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
 	public static IProduct create(String name, double price, int ownerId, boolean isAvailable) {
 		try {
 			Statement stmt = DatabaseUtil.getConnection().createStatement();
@@ -213,5 +189,19 @@ public class ProductDatabaseUtil {
 		}
 
 		return products;
+	}
+
+	public static void deleteById(int productId) {
+		try {
+			Statement stmt = DatabaseUtil.getConnection().createStatement();
+			String query = "DELETE FROM product WHERE id = ?";
+
+			PreparedStatement preparedStmt = DatabaseUtil.getConnection().prepareStatement(query);
+			preparedStmt.setInt(1, productId);
+			preparedStmt.execute();
+			stmt.close();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 }

@@ -10,7 +10,7 @@ import org.gustaveeiffel.fr.eiffelcorp.common.database.ReviewDatabaseUtil;
 import org.gustaveeiffel.fr.eiffelcorp.common.database.TransactionDatabaseUtil;
 import org.gustaveeiffel.fr.eiffelcorp.common.employee.IEmployee;
 import org.gustaveeiffel.fr.eiffelcorp.common.exception.BuyerSameAsSellerException;
-import org.gustaveeiffel.fr.eiffelcorp.common.exception.EmployeeBudgetIsNotEnoughException;
+import org.gustaveeiffel.fr.eiffelcorp.common.exception.BudgetIsNotEnoughException;
 import org.gustaveeiffel.fr.eiffelcorp.common.exception.InvalidProductRatingException;
 import org.gustaveeiffel.fr.eiffelcorp.common.exception.NotProductOwnerException;
 import org.gustaveeiffel.fr.eiffelcorp.common.exception.ProductHasNotAlreadyBeenSoldException;
@@ -64,7 +64,7 @@ public class ProductService extends UnicastRemoteObject implements IProductServi
         }
 
         if (buyer.getBudget() < product.getPrice()) {
-            throw new EmployeeBudgetIsNotEnoughException(buyer.getBudget(), product.getPrice());
+            throw new BudgetIsNotEnoughException(buyer.getBudget(), product.getPrice());
         }
 
         IEmployee seller = EmployeeDatabaseUtil.getById(product.getOwnerId());
