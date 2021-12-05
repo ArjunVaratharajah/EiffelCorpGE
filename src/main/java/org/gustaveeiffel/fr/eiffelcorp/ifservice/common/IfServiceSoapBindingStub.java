@@ -16,7 +16,7 @@ public class IfServiceSoapBindingStub extends org.apache.axis.client.Stub implem
     static org.apache.axis.description.OperationDesc [] _operations;
 
     static {
-        _operations = new org.apache.axis.description.OperationDesc[7];
+        _operations = new org.apache.axis.description.OperationDesc[8];
         _initOperationDesc1();
     }
 
@@ -33,6 +33,17 @@ public class IfServiceSoapBindingStub extends org.apache.axis.client.Stub implem
         _operations[0] = oper;
 
         oper = new org.apache.axis.description.OperationDesc();
+        oper.setName("getReviews");
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("http://server.ifservice.eiffelcorp.fr.gustaveeiffel.org", "idProduct"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "int"), int.class, false, false);
+        oper.addParameter(param);
+        oper.setReturnType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
+        oper.setReturnClass(java.lang.String.class);
+        oper.setReturnQName(new javax.xml.namespace.QName("http://server.ifservice.eiffelcorp.fr.gustaveeiffel.org", "getReviewsReturn"));
+        oper.setStyle(org.apache.axis.constants.Style.WRAPPED);
+        oper.setUse(org.apache.axis.constants.Use.LITERAL);
+        _operations[1] = oper;
+
+        oper = new org.apache.axis.description.OperationDesc();
         oper.setName("deleteProductFromCart");
         param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("http://server.ifservice.eiffelcorp.fr.gustaveeiffel.org", "productId"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "int"), int.class, false, false);
         oper.addParameter(param);
@@ -43,7 +54,7 @@ public class IfServiceSoapBindingStub extends org.apache.axis.client.Stub implem
         oper.setReturnQName(new javax.xml.namespace.QName("http://server.ifservice.eiffelcorp.fr.gustaveeiffel.org", "deleteProductFromCartReturn"));
         oper.setStyle(org.apache.axis.constants.Style.WRAPPED);
         oper.setUse(org.apache.axis.constants.Use.LITERAL);
-        _operations[1] = oper;
+        _operations[2] = oper;
 
         oper = new org.apache.axis.description.OperationDesc();
         oper.setName("getCustomerFullname");
@@ -54,7 +65,7 @@ public class IfServiceSoapBindingStub extends org.apache.axis.client.Stub implem
         oper.setReturnQName(new javax.xml.namespace.QName("http://server.ifservice.eiffelcorp.fr.gustaveeiffel.org", "getCustomerFullnameReturn"));
         oper.setStyle(org.apache.axis.constants.Style.WRAPPED);
         oper.setUse(org.apache.axis.constants.Use.LITERAL);
-        _operations[2] = oper;
+        _operations[3] = oper;
 
         oper = new org.apache.axis.description.OperationDesc();
         oper.setName("getCustomerInfo");
@@ -65,7 +76,7 @@ public class IfServiceSoapBindingStub extends org.apache.axis.client.Stub implem
         oper.setReturnQName(new javax.xml.namespace.QName("http://server.ifservice.eiffelcorp.fr.gustaveeiffel.org", "getCustomerInfoReturn"));
         oper.setStyle(org.apache.axis.constants.Style.WRAPPED);
         oper.setUse(org.apache.axis.constants.Use.LITERAL);
-        _operations[3] = oper;
+        _operations[4] = oper;
 
         oper = new org.apache.axis.description.OperationDesc();
         oper.setName("getCart");
@@ -76,7 +87,7 @@ public class IfServiceSoapBindingStub extends org.apache.axis.client.Stub implem
         oper.setReturnQName(new javax.xml.namespace.QName("http://server.ifservice.eiffelcorp.fr.gustaveeiffel.org", "getCartReturn"));
         oper.setStyle(org.apache.axis.constants.Style.WRAPPED);
         oper.setUse(org.apache.axis.constants.Use.LITERAL);
-        _operations[4] = oper;
+        _operations[5] = oper;
 
         oper = new org.apache.axis.description.OperationDesc();
         oper.setName("addProductToCart");
@@ -89,7 +100,7 @@ public class IfServiceSoapBindingStub extends org.apache.axis.client.Stub implem
         oper.setReturnQName(new javax.xml.namespace.QName("http://server.ifservice.eiffelcorp.fr.gustaveeiffel.org", "addProductToCartReturn"));
         oper.setStyle(org.apache.axis.constants.Style.WRAPPED);
         oper.setUse(org.apache.axis.constants.Use.LITERAL);
-        _operations[5] = oper;
+        _operations[6] = oper;
 
         oper = new org.apache.axis.description.OperationDesc();
         oper.setName("payCart");
@@ -100,7 +111,7 @@ public class IfServiceSoapBindingStub extends org.apache.axis.client.Stub implem
         oper.setReturnQName(new javax.xml.namespace.QName("http://server.ifservice.eiffelcorp.fr.gustaveeiffel.org", "payCartReturn"));
         oper.setStyle(org.apache.axis.constants.Style.WRAPPED);
         oper.setUse(org.apache.axis.constants.Use.LITERAL);
-        _operations[6] = oper;
+        _operations[7] = oper;
 
     }
 
@@ -189,12 +200,46 @@ public class IfServiceSoapBindingStub extends org.apache.axis.client.Stub implem
 }
     }
 
-    public java.lang.String deleteProductFromCart(int productId, int customerId) throws java.rmi.RemoteException {
+    public java.lang.String getReviews(int idProduct) throws java.rmi.RemoteException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
         org.apache.axis.client.Call _call = createCall();
         _call.setOperation(_operations[1]);
+        _call.setUseSOAPAction(true);
+        _call.setSOAPActionURI("");
+        _call.setEncodingStyle(null);
+        _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
+        _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
+        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        _call.setOperationName(new javax.xml.namespace.QName("http://server.ifservice.eiffelcorp.fr.gustaveeiffel.org", "getReviews"));
+
+        setRequestHeaders(_call);
+        setAttachments(_call);
+ try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {new java.lang.Integer(idProduct)});
+
+        if (_resp instanceof java.rmi.RemoteException) {
+            throw (java.rmi.RemoteException)_resp;
+        }
+        else {
+            extractAttachments(_call);
+            try {
+                return (java.lang.String) _resp;
+            } catch (java.lang.Exception _exception) {
+                return (java.lang.String) org.apache.axis.utils.JavaUtils.convert(_resp, java.lang.String.class);
+            }
+        }
+  } catch (org.apache.axis.AxisFault axisFaultException) {
+  throw axisFaultException;
+}
+    }
+
+    public java.lang.String deleteProductFromCart(int productId, int customerId) throws java.rmi.RemoteException {
+        if (super.cachedEndpoint == null) {
+            throw new org.apache.axis.NoEndPointException();
+        }
+        org.apache.axis.client.Call _call = createCall();
+        _call.setOperation(_operations[2]);
         _call.setUseSOAPAction(true);
         _call.setSOAPActionURI("");
         _call.setEncodingStyle(null);
@@ -228,7 +273,7 @@ public class IfServiceSoapBindingStub extends org.apache.axis.client.Stub implem
             throw new org.apache.axis.NoEndPointException();
         }
         org.apache.axis.client.Call _call = createCall();
-        _call.setOperation(_operations[2]);
+        _call.setOperation(_operations[3]);
         _call.setUseSOAPAction(true);
         _call.setSOAPActionURI("");
         _call.setEncodingStyle(null);
@@ -262,7 +307,7 @@ public class IfServiceSoapBindingStub extends org.apache.axis.client.Stub implem
             throw new org.apache.axis.NoEndPointException();
         }
         org.apache.axis.client.Call _call = createCall();
-        _call.setOperation(_operations[3]);
+        _call.setOperation(_operations[4]);
         _call.setUseSOAPAction(true);
         _call.setSOAPActionURI("");
         _call.setEncodingStyle(null);
@@ -296,7 +341,7 @@ public class IfServiceSoapBindingStub extends org.apache.axis.client.Stub implem
             throw new org.apache.axis.NoEndPointException();
         }
         org.apache.axis.client.Call _call = createCall();
-        _call.setOperation(_operations[4]);
+        _call.setOperation(_operations[5]);
         _call.setUseSOAPAction(true);
         _call.setSOAPActionURI("");
         _call.setEncodingStyle(null);
@@ -330,7 +375,7 @@ public class IfServiceSoapBindingStub extends org.apache.axis.client.Stub implem
             throw new org.apache.axis.NoEndPointException();
         }
         org.apache.axis.client.Call _call = createCall();
-        _call.setOperation(_operations[5]);
+        _call.setOperation(_operations[6]);
         _call.setUseSOAPAction(true);
         _call.setSOAPActionURI("");
         _call.setEncodingStyle(null);
@@ -364,7 +409,7 @@ public class IfServiceSoapBindingStub extends org.apache.axis.client.Stub implem
             throw new org.apache.axis.NoEndPointException();
         }
         org.apache.axis.client.Call _call = createCall();
-        _call.setOperation(_operations[6]);
+        _call.setOperation(_operations[7]);
         _call.setUseSOAPAction(true);
         _call.setSOAPActionURI("");
         _call.setEncodingStyle(null);

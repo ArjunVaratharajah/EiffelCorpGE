@@ -22,6 +22,9 @@
       <parameter name="typeMappingVersion" value="1.2"/>
       <operation name="getProducts" qname="operNS:getProducts" xmlns:operNS="http://server.ifservice.eiffelcorp.fr.gustaveeiffel.org" returnQName="retNS:getProductsReturn" xmlns:retNS="http://server.ifservice.eiffelcorp.fr.gustaveeiffel.org" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
       </operation>
+      <operation name="getReviews" qname="operNS:getReviews" xmlns:operNS="http://server.ifservice.eiffelcorp.fr.gustaveeiffel.org" returnQName="retNS:getReviewsReturn" xmlns:retNS="http://server.ifservice.eiffelcorp.fr.gustaveeiffel.org" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+        <parameter qname="pns:idProduct" xmlns:pns="http://server.ifservice.eiffelcorp.fr.gustaveeiffel.org" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
       <operation name="deleteProductFromCart" qname="operNS:deleteProductFromCart" xmlns:operNS="http://server.ifservice.eiffelcorp.fr.gustaveeiffel.org" returnQName="retNS:deleteProductFromCartReturn" xmlns:retNS="http://server.ifservice.eiffelcorp.fr.gustaveeiffel.org" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
         <parameter qname="pns:productId" xmlns:pns="http://server.ifservice.eiffelcorp.fr.gustaveeiffel.org" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
         <parameter qname="pns:customerId" xmlns:pns="http://server.ifservice.eiffelcorp.fr.gustaveeiffel.org" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
@@ -42,7 +45,7 @@
       <operation name="payCart" qname="operNS:payCart" xmlns:operNS="http://server.ifservice.eiffelcorp.fr.gustaveeiffel.org" returnQName="retNS:payCartReturn" xmlns:retNS="http://server.ifservice.eiffelcorp.fr.gustaveeiffel.org" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
         <parameter qname="pns:customerId" xmlns:pns="http://server.ifservice.eiffelcorp.fr.gustaveeiffel.org" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
       </operation>
-      <parameter name="allowedMethods" value="getCustomerFullname payCart getCustomerInfo deleteProductFromCart getCart getProducts addProductToCart"/>
+      <parameter name="allowedMethods" value="getCustomerFullname payCart getCustomerInfo deleteProductFromCart getReviews getCart getProducts addProductToCart"/>
 
   </service>
 </deployment>

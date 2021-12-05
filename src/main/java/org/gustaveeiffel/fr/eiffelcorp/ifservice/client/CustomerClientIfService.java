@@ -24,12 +24,13 @@ public class CustomerClientIfService {
 
         do {
             System.out.println("\nWhat do you want to do ?");
-            System.out.println("1. Display products");
+            System.out.println("1. Display my info");
             System.out.println("2. Display products");
-            System.out.println("3. Display my cart");
-            System.out.println("4. Add product to my cart");
-            System.out.println("5. Delete product from my cart");
-            System.out.println("6. Pay my cart");
+            System.out.println("3. Display review of a product");
+            System.out.println("4. Display my cart");
+            System.out.println("5. Add product to my cart");
+            System.out.println("6. Delete product from my cart");
+            System.out.println("7. Pay my cart");
 
             System.out.print("Select option: ");
             Scanner scanner = new Scanner(System.in);
@@ -44,15 +45,18 @@ public class CustomerClientIfService {
                         displayProducts();
                         break;
                     case 3:
-                        displayCart();
+                        displayReviewOfAProduct();
                         break;
                     case 4:
-                        addProductToMyCart();
+                        displayCart();
                         break;
                     case 5:
-                        deleteProductFromMyCart();
+                        addProductToMyCart();
                         break;
                     case 6:
+                        deleteProductFromMyCart();
+                        break;
+                    case 7:
                         payMyCart();
                         break;
 
@@ -78,6 +82,15 @@ public class CustomerClientIfService {
     private void displayProducts() throws RemoteException {
         System.out.println("\n===List of products===");
         System.out.println(ifService.getProducts());
+    }
+
+    private void displayReviewOfAProduct() throws RemoteException {
+        System.out.println("\n===Display review of a product===");
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter product ID : ");
+        int productId = scanner.nextInt();
+        System.out.println(ifService.getReviews(productId));
     }
 
     private void displayCart() throws RemoteException {

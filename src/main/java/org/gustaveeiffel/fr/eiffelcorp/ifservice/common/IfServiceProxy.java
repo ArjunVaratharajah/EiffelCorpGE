@@ -86,5 +86,11 @@ public class IfServiceProxy implements org.gustaveeiffel.fr.eiffelcorp.ifservice
     return ifService.payCart(customerId);
   }
   
+  public java.lang.String getReviews(int idProduct) throws java.rmi.RemoteException{
+    if (ifService == null)
+      _initIfServiceProxy();
+    return ifService.getReviews(idProduct);
+  }
+  
   
 }

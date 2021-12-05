@@ -75,7 +75,7 @@ public class ReviewDatabaseUtil {
 	public static List<IReview> getByProductId(int productId) {
 		try {
 			Statement stmt = DatabaseUtil.getConnection().createStatement();
-			String query = "SELECT * from review WHERE product_id = ?";
+			String query = "SELECT * from review WHERE product_id = ? ORDER BY date_time DESC";
 
 			PreparedStatement preparedStmt = DatabaseUtil.getConnection().prepareStatement(query);
 			preparedStmt.setInt(1, productId);
@@ -87,11 +87,12 @@ public class ReviewDatabaseUtil {
 				int id = rs.getInt("id");
 				int employeeId = rs.getInt("employee_id");
 				double rating = rs.getDouble("rating");
-				String comment = rs.getString("comment");
+				String comment = rs.getString("comment").trim();
+				Timestamp dateTime = rs.getTimestamp("date_time");
 				IProduct product = ProductDatabaseUtil.getById(productId);
 				IEmployee employee = EmployeeDatabaseUtil.getById(employeeId);
 
-				reviews.add(new Review(id, product.getName(), employee.getFullname(), rating, comment));
+				reviews.add(new Review(id, product.getName(), employee.getFullname(), rating, comment, dateTime));
 			}
 			stmt.close();
 

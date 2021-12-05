@@ -14,6 +14,20 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      </sequence>
     </complexType>
    </element>
+   <element name="getReviews">
+    <complexType>
+     <sequence>
+      <element name="idProduct" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getReviewsResponse">
+    <complexType>
+     <sequence>
+      <element name="getReviewsReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
    <element name="deleteProductFromCart">
     <complexType>
      <sequence>
@@ -111,6 +125,14 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
+   <wsdl:message name="getReviewsResponse">
+
+      <wsdl:part element="impl:getReviewsResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
    <wsdl:message name="addProductToCartResponse">
 
       <wsdl:part element="impl:addProductToCartResponse" name="parameters">
@@ -199,6 +221,14 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
+   <wsdl:message name="getReviewsRequest">
+
+      <wsdl:part element="impl:getReviews" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
    <wsdl:message name="deleteProductFromCartResponse">
 
       <wsdl:part element="impl:deleteProductFromCartResponse" name="parameters">
@@ -224,6 +254,18 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
        </wsdl:input>
 
          <wsdl:output message="impl:getProductsResponse" name="getProductsResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getReviews">
+
+         <wsdl:input message="impl:getReviewsRequest" name="getReviewsRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getReviewsResponse" name="getReviewsResponse">
 
        </wsdl:output>
 
@@ -318,6 +360,24 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
          </wsdl:input>
 
          <wsdl:output name="getProductsResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getReviews">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getReviewsRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getReviewsResponse">
 
             <wsdlsoap:body use="literal"/>
 

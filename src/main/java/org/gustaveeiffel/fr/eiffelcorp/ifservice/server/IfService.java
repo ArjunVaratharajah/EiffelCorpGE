@@ -2,13 +2,11 @@ package org.gustaveeiffel.fr.eiffelcorp.ifservice.server;
 
 import org.gustaveeiffel.fr.eiffelcorp.common.customer.CartProduct;
 import org.gustaveeiffel.fr.eiffelcorp.common.customer.Customer;
-import org.gustaveeiffel.fr.eiffelcorp.common.database.CartDatabaseUtil;
-import org.gustaveeiffel.fr.eiffelcorp.common.database.CustomerDatabaseUtil;
-import org.gustaveeiffel.fr.eiffelcorp.common.database.EmployeeDatabaseUtil;
-import org.gustaveeiffel.fr.eiffelcorp.common.database.ProductDatabaseUtil;
+import org.gustaveeiffel.fr.eiffelcorp.common.database.*;
 import org.gustaveeiffel.fr.eiffelcorp.common.employee.IEmployee;
 import org.gustaveeiffel.fr.eiffelcorp.common.exception.*;
 import org.gustaveeiffel.fr.eiffelcorp.common.product.IProduct;
+import org.gustaveeiffel.fr.eiffelcorp.common.product.IReview;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -140,6 +138,36 @@ public class IfService {
         String info = "Thanks for purchasing the following products:\n";
         for (IProduct product : productsInCart) {
             info += product.getInfo() + "\n";
+        }
+
+        return info;
+    }
+
+    public String getReviews(int idProduct) throws RemoteException {
+        IProduct product = null;
+        try {
+            product = ProductDatabaseUtil.getById(idProduct);
+        } catch (ProductNotFoundException e) {
+            return e.getMessage();
+        }
+
+        if (!product.isAvailable()) {
+            return new ProductIsNotAvailableException().getMessage();
+        }
+
+        if (!product.hasAlreadyBeenSold()) {
+            return new ProductHasNotAlreadyBeenSoldException().getMessage();
+        }
+
+        List<IReview> reviews = ReviewDatabaseUtil.getByProductId(idProduct);
+        if (reviews.isEmpty()) {
+            return "No review for this product.";
+        }
+
+        String info = "";
+
+        for (IReview review : reviews) {
+            info += review.getInfo() + "\n";
         }
 
         return info;
