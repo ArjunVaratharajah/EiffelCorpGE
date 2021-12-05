@@ -6,7 +6,7 @@ import java.rmi.server.UnicastRemoteObject;
 
 import org.gustaveeiffel.fr.eiffelcorp.common.product.IProduct;
 
-public class Product extends UnicastRemoteObject implements IProduct, Serializable {
+public class Product extends UnicastRemoteObject implements IProduct {
 
 	private int id;
 	private String name;

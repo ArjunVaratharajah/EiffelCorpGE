@@ -25,10 +25,11 @@ public class CustomerClientIfService {
         do {
             System.out.println("\nWhat do you want to do ?");
             System.out.println("1. Display products");
-            System.out.println("2. Display my cart");
-            System.out.println("3. Add product to my cart");
-            System.out.println("4. Delete product from my cart");
-            System.out.println("5. Pay my cart");
+            System.out.println("2. Display products");
+            System.out.println("3. Display my cart");
+            System.out.println("4. Add product to my cart");
+            System.out.println("5. Delete product from my cart");
+            System.out.println("6. Pay my cart");
 
             System.out.print("Select option: ");
             Scanner scanner = new Scanner(System.in);
@@ -37,18 +38,21 @@ public class CustomerClientIfService {
 
                 switch (option) {
                     case 1:
-                        displayProducts();
+                        displayMyInfo();
                         break;
                     case 2:
-                        displayCart();
+                        displayProducts();
                         break;
                     case 3:
-                        addProductToMyCart();
+                        displayCart();
                         break;
                     case 4:
-                        deleteProductFromMyCart();
+                        addProductToMyCart();
                         break;
                     case 5:
+                        deleteProductFromMyCart();
+                        break;
+                    case 6:
                         payMyCart();
                         break;
 
@@ -62,8 +66,13 @@ public class CustomerClientIfService {
     }
 
     private void displayWelcome() throws RemoteException {
-        String fullname = ifService.getCustomer(customerId);
+        String fullname = ifService.getCustomerFullname(customerId);
         System.out.println("===Welcome back to IfService " + fullname + "===");
+    }
+
+    private void displayMyInfo() throws RemoteException {
+        System.out.println("\n===My info===");
+        System.out.println(ifService.getCustomerInfo(customerId));
     }
 
     private void displayProducts() throws RemoteException {

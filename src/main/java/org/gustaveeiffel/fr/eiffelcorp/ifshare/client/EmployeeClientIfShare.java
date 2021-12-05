@@ -4,6 +4,7 @@ import org.gustaveeiffel.fr.eiffelcorp.common.employee.IEmployee;
 import org.gustaveeiffel.fr.eiffelcorp.common.employee.IEmployeeService;
 import org.gustaveeiffel.fr.eiffelcorp.common.product.IProduct;
 import org.gustaveeiffel.fr.eiffelcorp.common.product.IProductService;
+import org.gustaveeiffel.fr.eiffelcorp.common.product.IReview;
 
 import java.net.MalformedURLException;
 import java.rmi.Naming;
@@ -38,7 +39,8 @@ public class EmployeeClientIfShare {
             System.out.println("5. Buy product");
             System.out.println("6. Put product as available");
             System.out.println("7. Review product");
-            System.out.println("8. Add new product");
+            System.out.println("8. Display reviews of a product");
+            System.out.println("9. Add new product");
 
             System.out.print("Select option: ");
             Scanner scanner = new Scanner(System.in);
@@ -68,6 +70,9 @@ public class EmployeeClientIfShare {
                         reviewProduct();
                         break;
                     case 8:
+                        displayReviewsOfAProduct();
+                        break;
+                    case 9:
                         addNewProduct();
                         break;
 
@@ -174,6 +179,28 @@ public class EmployeeClientIfShare {
         try {
             String result = productService.review(idProduct, employeeId, rating, comment);
             System.out.println(result);
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void displayReviewsOfAProduct() throws RemoteException {
+        System.out.println("\n===Display review of a product===");
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter product ID : ");
+        int productId = scanner.nextInt();
+
+        try {
+            List<IReview> reviews = productService.getReviews(productId);
+            if (reviews.isEmpty()) {
+                System.out.println("No review for this product.");
+                return;
+            }
+
+            for (IReview review : reviews) {
+                System.out.println(review.getInfo());
+            }
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
         }

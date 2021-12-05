@@ -1,15 +1,19 @@
 package org.gustaveeiffel.fr.eiffelcorp.ifshare.server.product;
 
-import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
-import java.util.List;
-
 import org.gustaveeiffel.fr.eiffelcorp.common.customer.CartProduct;
-import org.gustaveeiffel.fr.eiffelcorp.common.database.*;
+import org.gustaveeiffel.fr.eiffelcorp.common.database.CartDatabaseUtil;
+import org.gustaveeiffel.fr.eiffelcorp.common.database.EmployeeDatabaseUtil;
+import org.gustaveeiffel.fr.eiffelcorp.common.database.ProductDatabaseUtil;
+import org.gustaveeiffel.fr.eiffelcorp.common.database.ReviewDatabaseUtil;
 import org.gustaveeiffel.fr.eiffelcorp.common.employee.IEmployee;
 import org.gustaveeiffel.fr.eiffelcorp.common.exception.*;
 import org.gustaveeiffel.fr.eiffelcorp.common.product.IProduct;
 import org.gustaveeiffel.fr.eiffelcorp.common.product.IProductService;
+import org.gustaveeiffel.fr.eiffelcorp.common.product.IReview;
+
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+import java.util.List;
 
 public class ProductService extends UnicastRemoteObject implements IProductService {
 
@@ -76,7 +80,6 @@ public class ProductService extends UnicastRemoteObject implements IProductServi
         ProductDatabaseUtil.update(product);
         EmployeeDatabaseUtil.update(buyer);
         EmployeeDatabaseUtil.update(seller);
-        TransactionDatabaseUtil.add(idBuyer, seller.getId(), idProduct);
 
         return "The product " + product.getName() + " has correctly been sold by " + seller.getFullname() + " to " + buyer.getFullname() + ".\nThe amount of the transaction was " + product.getPrice() + ".";
     }
@@ -124,6 +127,14 @@ public class ProductService extends UnicastRemoteObject implements IProductServi
         ReviewDatabaseUtil.addOrUpdate(idProduct, idEmployee, rating, comment);
 
         return "The review has been added/updated for the product " + product.getName() + ".";
+    }
+
+    @Override
+    public List<IReview> getReviews(int idProduct) throws RemoteException {
+        // Throw an exception if the product does not exist for the client side
+        ProductDatabaseUtil.getById(idProduct);
+
+        return ReviewDatabaseUtil.getByProductId(idProduct);
     }
 
 }

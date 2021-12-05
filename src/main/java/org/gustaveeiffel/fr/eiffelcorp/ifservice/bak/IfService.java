@@ -1,4 +1,4 @@
-package org.gustaveeiffel.fr.eiffelcorp.ifservice.server;
+package org.gustaveeiffel.fr.eiffelcorp.ifservice.bak;
 
 import org.gustaveeiffel.fr.eiffelcorp.common.customer.CartProduct;
 import org.gustaveeiffel.fr.eiffelcorp.common.customer.Customer;

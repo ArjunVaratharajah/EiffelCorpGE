@@ -1,12 +1,20 @@
 package org.gustaveeiffel.fr.eiffelcorp.common.database;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.gustaveeiffel.fr.eiffelcorp.common.customer.CartProduct;
+import org.gustaveeiffel.fr.eiffelcorp.common.employee.IEmployee;
+import org.gustaveeiffel.fr.eiffelcorp.common.exception.CartProductNotFoundException;
+import org.gustaveeiffel.fr.eiffelcorp.common.product.IProduct;
+import org.gustaveeiffel.fr.eiffelcorp.common.product.IReview;
 import org.gustaveeiffel.fr.eiffelcorp.common.util.StringUtil;
+import org.gustaveeiffel.fr.eiffelcorp.ifshare.server.product.Review;
 
 public class ReviewDatabaseUtil {
 	
@@ -61,6 +69,36 @@ public class ReviewDatabaseUtil {
 			preparedStmt.close();
 		} catch (Exception e) {
 			throw new RuntimeException(e);
+		}
+	}
+
+	public static List<IReview> getByProductId(int productId) {
+		try {
+			Statement stmt = DatabaseUtil.getConnection().createStatement();
+			String query = "SELECT * from review WHERE product_id = ?";
+
+			PreparedStatement preparedStmt = DatabaseUtil.getConnection().prepareStatement(query);
+			preparedStmt.setInt(1, productId);
+			preparedStmt.execute();
+
+			List<IReview> reviews = new ArrayList<>();
+			ResultSet rs = preparedStmt.executeQuery();
+			while (rs.next()) {
+				int id = rs.getInt("id");
+				int employeeId = rs.getInt("employee_id");
+				double rating = rs.getDouble("rating");
+				String comment = rs.getString("comment");
+				IProduct product = ProductDatabaseUtil.getById(productId);
+				IEmployee employee = EmployeeDatabaseUtil.getById(employeeId);
+
+				reviews.add(new Review(id, product.getName(), employee.getFullname(), rating, comment));
+			}
+			stmt.close();
+
+			return reviews;
+		} catch (Exception e) {
+			System.out.println(e);
+			throw new CartProductNotFoundException(productId);
 		}
 	}
 

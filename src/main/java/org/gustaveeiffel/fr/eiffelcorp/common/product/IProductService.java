@@ -17,4 +17,7 @@ public interface IProductService extends Remote {
     String putAsAvailable(int employeeId, int idProduct) throws RemoteException;
 
     String review(int idProduct, int idEmployee, int rating, String comment) throws RemoteException;
+
+    List<IReview> getReviews(int idProduct) throws RemoteException;
+
 }

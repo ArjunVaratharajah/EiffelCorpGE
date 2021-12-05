@@ -50,10 +50,16 @@ public class IfServiceProxy implements org.gustaveeiffel.fr.eiffelcorp.ifservice
     return ifService.getProducts();
   }
   
-  public java.lang.String getCustomer(int customerId) throws java.rmi.RemoteException{
+  public java.lang.String getCustomerFullname(int customerId) throws java.rmi.RemoteException{
     if (ifService == null)
       _initIfServiceProxy();
-    return ifService.getCustomer(customerId);
+    return ifService.getCustomerFullname(customerId);
+  }
+  
+  public java.lang.String getCustomerInfo(int customerId) throws java.rmi.RemoteException{
+    if (ifService == null)
+      _initIfServiceProxy();
+    return ifService.getCustomerInfo(customerId);
   }
   
   public java.lang.String getCart(int customerId) throws java.rmi.RemoteException{
