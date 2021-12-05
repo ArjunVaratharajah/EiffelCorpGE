@@ -4,19 +4,10 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 
-import org.gustaveeiffel.fr.eiffelcorp.common.database.EmployeeDatabaseUtil;
-import org.gustaveeiffel.fr.eiffelcorp.common.database.ProductDatabaseUtil;
-import org.gustaveeiffel.fr.eiffelcorp.common.database.ReviewDatabaseUtil;
-import org.gustaveeiffel.fr.eiffelcorp.common.database.TransactionDatabaseUtil;
+import org.gustaveeiffel.fr.eiffelcorp.common.customer.CartProduct;
+import org.gustaveeiffel.fr.eiffelcorp.common.database.*;
 import org.gustaveeiffel.fr.eiffelcorp.common.employee.IEmployee;
-import org.gustaveeiffel.fr.eiffelcorp.common.exception.BuyerSameAsSellerException;
-import org.gustaveeiffel.fr.eiffelcorp.common.exception.BudgetIsNotEnoughException;
-import org.gustaveeiffel.fr.eiffelcorp.common.exception.InvalidProductRatingException;
-import org.gustaveeiffel.fr.eiffelcorp.common.exception.NotProductOwnerException;
-import org.gustaveeiffel.fr.eiffelcorp.common.exception.ProductHasNotAlreadyBeenSoldException;
-import org.gustaveeiffel.fr.eiffelcorp.common.exception.ProductIsNotAvailableException;
-import org.gustaveeiffel.fr.eiffelcorp.common.exception.ProductNameInvalidException;
-import org.gustaveeiffel.fr.eiffelcorp.common.exception.ProductPriceInvalidException;
+import org.gustaveeiffel.fr.eiffelcorp.common.exception.*;
 import org.gustaveeiffel.fr.eiffelcorp.common.product.IProduct;
 import org.gustaveeiffel.fr.eiffelcorp.common.product.IProductService;
 
@@ -65,6 +56,13 @@ public class ProductService extends UnicastRemoteObject implements IProductServi
 
         if (buyer.getBudget() < product.getPrice()) {
             throw new BudgetIsNotEnoughException(buyer.getBudget(), product.getPrice());
+        }
+
+        try {
+            CartProduct cartProduct = CartDatabaseUtil.getCartProduct(idProduct);
+            throw new ProductIsInACartException();
+        } catch (CartProductNotFoundException e) {
+            // Product is not in a cart, we can continue
         }
 
         IEmployee seller = EmployeeDatabaseUtil.getById(product.getOwnerId());

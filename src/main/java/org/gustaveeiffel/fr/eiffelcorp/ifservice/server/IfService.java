@@ -89,7 +89,7 @@ public class IfService {
         try {
             CartProduct cartProduct = CartDatabaseUtil.getCartProduct(productId);
 
-            return "The product is already in a cart.";
+            return new ProductIsInACartException().getMessage();
         } catch (CartProductNotFoundException e) {
             CartDatabaseUtil.addProduct(productId, customerId);
 

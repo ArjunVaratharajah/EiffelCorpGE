@@ -102,6 +102,11 @@ public class EmployeeClientIfShare {
     private void displayProducts() throws RemoteException {
         List<IProduct> products = productService.getAllAvailable();
         System.out.println("\n===List of products===");
+
+        if (products.isEmpty()) {
+            System.out.println("No product.");
+        }
+
         for (IProduct product : products) {
             System.out.println(product.getInfo());
         }
@@ -110,6 +115,11 @@ public class EmployeeClientIfShare {
     private void displayMyProducts() throws RemoteException {
         List<IProduct> products = productService.getByOwnerId(employeeId);
         System.out.println("\n===My products===");
+
+        if (products.isEmpty()) {
+            System.out.println("No product.");
+        }
+
         for (IProduct product : products) {
             System.out.println(product.getInfo());
         }
@@ -120,7 +130,7 @@ public class EmployeeClientIfShare {
 
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Enter Product ID to buy: ");
+        System.out.print("Enter Product ID: ");
         int idProduct = scanner.nextInt();
 
         try {

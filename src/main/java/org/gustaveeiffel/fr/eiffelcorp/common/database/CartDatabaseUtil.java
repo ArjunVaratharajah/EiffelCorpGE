@@ -35,7 +35,7 @@ public class CartDatabaseUtil {
 					"customer_id  integer not null,",
 					"CONSTRAINT fk_id_product FOREIGN KEY(product_id) REFERENCES product(id),",
 					"CONSTRAINT fk_id_customer FOREIGN KEY(customer_id) REFERENCES customer(id),",
-					"CONSTRAINT unique_product_id_customer_id UNIQUE(producter_id, customer_id)",
+					"CONSTRAINT unique_product_id_customer_id UNIQUE(product_id, customer_id)",
 				")"
 			);
 
@@ -64,6 +64,7 @@ public class CartDatabaseUtil {
 
 			return new CartProduct(id, productId, customerId);
 		} catch (Exception e) {
+			System.out.println(e);
 			throw new CartProductNotFoundException(productId);
 		}
 	}

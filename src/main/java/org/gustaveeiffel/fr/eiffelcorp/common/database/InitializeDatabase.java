@@ -9,8 +9,8 @@ import java.sql.SQLException;
 public class InitializeDatabase {
 
     public static void main(String args[]) throws RemoteException, SQLException {
+        CartDatabaseUtil.dropTable();
         ReviewDatabaseUtil.dropTable();
-        TransactionDatabaseUtil.dropTable();
         ProductDatabaseUtil.dropTable();
         EmployeeDatabaseUtil.dropTable();
         CustomerDatabaseUtil.dropTable();
@@ -20,8 +20,8 @@ public class InitializeDatabase {
         CustomerDatabaseUtil.createTable();
         EmployeeDatabaseUtil.createTable();
         ProductDatabaseUtil.createTable();
-        TransactionDatabaseUtil.createTable();
         ReviewDatabaseUtil.createTable();
+        CartDatabaseUtil.createTable();
 
         IEmployee arjun = EmployeeDatabaseUtil.create("Arjun", "VARATHARAJAH", 100); // ID 1
         IEmployee benjamin = EmployeeDatabaseUtil.create("Benjamin", "JEDROCHA", 500); // ID 2
