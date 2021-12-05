@@ -65,6 +65,11 @@ public class Product extends UnicastRemoteObject implements IProduct {
 		this.isAvailable = isAvailable;
 	}
 
+	@Override
+	public void setPrice(double price) throws RemoteException {
+		this.price = price;
+	}
+
 
 	@Override
 	public int getOwnerId() throws RemoteException {

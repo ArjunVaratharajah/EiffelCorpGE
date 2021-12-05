@@ -37,7 +37,7 @@ public class EmployeeClientIfShare {
             System.out.println("3. Display my products");
             System.out.println("4. Display my info");
             System.out.println("5. Buy product");
-            System.out.println("6. Put product as available");
+            System.out.println("6. Put product as available with price");
             System.out.println("7. Review product");
             System.out.println("8. Display reviews of a product");
             System.out.println("9. Add new product");
@@ -64,7 +64,7 @@ public class EmployeeClientIfShare {
                         buyProduct();
                         break;
                     case 6:
-                        putProductAsAvailable();
+                        putProductAsAvailableWithPrice();
                         break;
                     case 7:
                         reviewProduct();
@@ -146,15 +146,18 @@ public class EmployeeClientIfShare {
         }
     }
 
-    private void putProductAsAvailable() throws RemoteException {
-        System.out.println("\n===Buy product===");
+    private void putProductAsAvailableWithPrice() throws RemoteException {
+        System.out.println("\n===Put product as available with price===");
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("Enter Product ID to put as available: ");
         int idProduct = scanner.nextInt();
 
+        System.out.print("Enter price: ");
+        double price = scanner.nextDouble();
+
         try {
-            String result = productService.putAsAvailable(employeeId, idProduct);
+            String result = productService.putAsAvailable(employeeId, idProduct, price);
             System.out.println(result);
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());

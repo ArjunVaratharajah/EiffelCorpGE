@@ -15,6 +15,8 @@ public interface IProduct extends Remote {
 
     void setAvailable(boolean isAvailable) throws RemoteException;
 
+    void setPrice(double price) throws RemoteException;
+
     int getOwnerId() throws RemoteException;
 
     boolean hasAlreadyBeenSold() throws RemoteException;

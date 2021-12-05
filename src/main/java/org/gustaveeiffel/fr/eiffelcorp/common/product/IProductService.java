@@ -14,7 +14,7 @@ public interface IProductService extends Remote {
 
     String buy(int idProduct, int idBuyer) throws RemoteException;
 
-    String putAsAvailable(int employeeId, int idProduct) throws RemoteException;
+    String putAsAvailable(int employeeId, int idProduct, double price) throws RemoteException;
 
     String review(int idProduct, int idEmployee, int rating, String comment) throws RemoteException;
 

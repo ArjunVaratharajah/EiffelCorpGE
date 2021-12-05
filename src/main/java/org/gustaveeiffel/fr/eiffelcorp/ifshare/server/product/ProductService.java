@@ -85,7 +85,7 @@ public class ProductService extends UnicastRemoteObject implements IProductServi
     }
 
     @Override
-    public String putAsAvailable(int employeeId, int idProduct) throws RemoteException {
+    public String putAsAvailable(int employeeId, int idProduct, double price) throws RemoteException {
         IProduct product = ProductDatabaseUtil.getById(idProduct);
 
         if (product.getOwnerId() != employeeId) {
@@ -93,14 +93,15 @@ public class ProductService extends UnicastRemoteObject implements IProductServi
             throw new NotProductOwnerException(product.getName(), employee.getFullname());
         }
 
-        if (product.isAvailable()) {
-            return "The product " + product.getName() + " is already available.";
+        if (price <= 0) {
+            throw new ProductPriceInvalidException(price);
         }
 
         product.setAvailable(true);
+        product.setPrice(price);
         ProductDatabaseUtil.update(product);
 
-        return "The product " + product.getName() + " has correctly been set to available.";
+        return "The product " + product.getName() + " has correctly been set to available with new price " + price + ".";
     }
 
     @Override
