@@ -5,7 +5,7 @@ import java.rmi.registry.LocateRegistry;
 
 import org.gustaveeiffel.fr.eiffelcorp.common.employee.IEmployeeService;
 
-public class EmployeeServer {
+public class EmployeeServerIfShare {
 
     public static void main(String args[]) throws Exception {
         LocateRegistry.createRegistry(1100);

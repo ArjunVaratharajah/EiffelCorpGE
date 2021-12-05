@@ -13,14 +13,14 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
-public class Client {
+public class EmployeeClientIfShare {
 
     private int employeeId;
 
     private IProductService productService;
     private IEmployeeService employeeService;
 
-    public Client(int employeeId) throws MalformedURLException, NotBoundException, RemoteException {
+    public EmployeeClientIfShare(int employeeId) throws MalformedURLException, NotBoundException, RemoteException {
         this.employeeId = employeeId;
         productService = (IProductService) Naming.lookup("rmi://localhost:1099/ProductService");
         employeeService = (IEmployeeService) Naming.lookup("rmi://localhost:1100/EmployeeService");
@@ -82,7 +82,7 @@ public class Client {
 
     private void displayWelcome() throws RemoteException {
         IEmployee employee = employeeService.getById(employeeId);
-        System.out.println("===Welcome back to IFShare " + employee.getFullname() + "===");
+        System.out.println("===Welcome back to IfShare " + employee.getFullname() + "===");
     }
 
     private void displayMyInfo() throws RemoteException {

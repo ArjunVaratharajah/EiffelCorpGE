@@ -32,8 +32,8 @@ public class IfService {
         return info;
     }
 
-    public String getCustomer(int customerId) {
-        return CustomerDatabaseUtil.getById(customerId).getInfo();
+    public String getCustomer(int customerId) throws RemoteException {
+        return CustomerDatabaseUtil.getById(customerId).getFullname();
     }
 
     public String getCart(int customerId) throws RemoteException {

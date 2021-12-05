@@ -5,7 +5,7 @@ import java.rmi.registry.LocateRegistry;
 
 import org.gustaveeiffel.fr.eiffelcorp.common.product.IProductService;
 
-public class ProductServer {
+public class ProductServerIfShare {
 
     public static void main(String args[]) throws Exception {
         LocateRegistry.createRegistry(1099);

@@ -33,8 +33,25 @@
   <ns1:parameter name="className" value="org.apache.axis.Version"/>
  </ns1:service>
  <ns1:service name="IfService" provider="java:RPC" style="wrapped" use="literal">
-  <ns1:operation name="getProducts" qname="ns2:getProducts" returnQName="ns2:getProductsReturn" returnType="xsd:string" soapAction="" xmlns:ns2="http://server.ifservice.eiffelcorp.fr.gustaveeiffel.org" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-  <ns1:parameter name="allowedMethods" value="getProducts"/>
+  <ns2:operation name="getProducts" qname="ns1:getProducts" returnQName="ns1:getProductsReturn" returnType="xsd:string" soapAction="" xmlns:ns1="http://server.ifservice.eiffelcorp.fr.gustaveeiffel.org" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://xml.apache.org/axis/wsdd/"/>
+  <ns1:operation name="deleteProductFromCart" qname="ns2:deleteProductFromCart" returnQName="ns2:deleteProductFromCartReturn" returnType="xsd:string" soapAction="" xmlns:ns2="http://server.ifservice.eiffelcorp.fr.gustaveeiffel.org" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns2:productId" type="xsd:int"/>
+   <ns1:parameter qname="ns2:customerId" type="xsd:int"/>
+  </ns1:operation>
+  <ns1:operation name="getCustomer" qname="ns3:getCustomer" returnQName="ns3:getCustomerReturn" returnType="xsd:string" soapAction="" xmlns:ns3="http://server.ifservice.eiffelcorp.fr.gustaveeiffel.org" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns3:customerId" type="xsd:int"/>
+  </ns1:operation>
+  <ns1:operation name="getCart" qname="ns4:getCart" returnQName="ns4:getCartReturn" returnType="xsd:string" soapAction="" xmlns:ns4="http://server.ifservice.eiffelcorp.fr.gustaveeiffel.org" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns4:customerId" type="xsd:int"/>
+  </ns1:operation>
+  <ns1:operation name="addProductToCart" qname="ns5:addProductToCart" returnQName="ns5:addProductToCartReturn" returnType="xsd:string" soapAction="" xmlns:ns5="http://server.ifservice.eiffelcorp.fr.gustaveeiffel.org" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns5:productId" type="xsd:int"/>
+   <ns1:parameter qname="ns5:customerId" type="xsd:int"/>
+  </ns1:operation>
+  <ns1:operation name="payCart" qname="ns6:payCart" returnQName="ns6:payCartReturn" returnType="xsd:string" soapAction="" xmlns:ns6="http://server.ifservice.eiffelcorp.fr.gustaveeiffel.org" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns6:customerId" type="xsd:int"/>
+  </ns1:operation>
+  <ns1:parameter name="allowedMethods" value="payCart deleteProductFromCart getCart getProducts addProductToCart getCustomer"/>
   <ns1:parameter name="typeMappingVersion" value="1.2"/>
   <ns1:parameter name="wsdlPortType" value="IfService"/>
   <ns1:parameter name="className" value="org.gustaveeiffel.fr.eiffelcorp.ifservice.server.IfService"/>

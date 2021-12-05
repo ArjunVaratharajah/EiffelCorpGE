@@ -12,7 +12,24 @@
       <parameter name="typeMappingVersion" value="1.2"/>
       <operation xmlns:operNS="http://server.ifservice.eiffelcorp.fr.gustaveeiffel.org" xmlns:retNS="http://server.ifservice.eiffelcorp.fr.gustaveeiffel.org" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getProducts" qname="operNS:getProducts" returnQName="retNS:getProductsReturn" returnType="rtns:string" soapAction="">
       </operation>
-      <parameter name="allowedMethods" value="getProducts"/>
+      <operation xmlns:operNS="http://server.ifservice.eiffelcorp.fr.gustaveeiffel.org" xmlns:retNS="http://server.ifservice.eiffelcorp.fr.gustaveeiffel.org" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="deleteProductFromCart" qname="operNS:deleteProductFromCart" returnQName="retNS:deleteProductFromCartReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://server.ifservice.eiffelcorp.fr.gustaveeiffel.org" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:productId" type="tns:int"/>
+        <parameter xmlns:pns="http://server.ifservice.eiffelcorp.fr.gustaveeiffel.org" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:customerId" type="tns:int"/>
+      </operation>
+      <operation xmlns:operNS="http://server.ifservice.eiffelcorp.fr.gustaveeiffel.org" xmlns:retNS="http://server.ifservice.eiffelcorp.fr.gustaveeiffel.org" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getCustomer" qname="operNS:getCustomer" returnQName="retNS:getCustomerReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://server.ifservice.eiffelcorp.fr.gustaveeiffel.org" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:customerId" type="tns:int"/>
+      </operation>
+      <operation xmlns:operNS="http://server.ifservice.eiffelcorp.fr.gustaveeiffel.org" xmlns:retNS="http://server.ifservice.eiffelcorp.fr.gustaveeiffel.org" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getCart" qname="operNS:getCart" returnQName="retNS:getCartReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://server.ifservice.eiffelcorp.fr.gustaveeiffel.org" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:customerId" type="tns:int"/>
+      </operation>
+      <operation xmlns:operNS="http://server.ifservice.eiffelcorp.fr.gustaveeiffel.org" xmlns:retNS="http://server.ifservice.eiffelcorp.fr.gustaveeiffel.org" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="addProductToCart" qname="operNS:addProductToCart" returnQName="retNS:addProductToCartReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://server.ifservice.eiffelcorp.fr.gustaveeiffel.org" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:productId" type="tns:int"/>
+        <parameter xmlns:pns="http://server.ifservice.eiffelcorp.fr.gustaveeiffel.org" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:customerId" type="tns:int"/>
+      </operation>
+      <operation xmlns:operNS="http://server.ifservice.eiffelcorp.fr.gustaveeiffel.org" xmlns:retNS="http://server.ifservice.eiffelcorp.fr.gustaveeiffel.org" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="payCart" qname="operNS:payCart" returnQName="retNS:payCartReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://server.ifservice.eiffelcorp.fr.gustaveeiffel.org" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:customerId" type="tns:int"/>
+      </operation>
+      <parameter name="allowedMethods" value="payCart deleteProductFromCart getCart getProducts addProductToCart getCustomer"/>
 
   </service>
 </deployment>
